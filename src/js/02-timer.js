@@ -2,7 +2,12 @@ import flatpickr from 'flatpickr';
 // Додатковий імпорт стилів
 import 'flatpickr/dist/flatpickr.min.css';
 
+let targetTime;
+
 const datepicker = document.querySelector('#datetime-picker');
+const startButton = document.querySelector('[data-start]');
+const labels = document.querySelectorAll('.label');
+const values = document.querySelectorAll('.value');
 
 const options = {
   enableTime: true,
@@ -10,7 +15,12 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
+    if (selectedDates[0].getTime() <= Date.now) {
+      alert('Pick the date in the future');
+    } else {
+      console.log('+');
+      targetTime = selectedDates[0].getTime();
+    }
   },
 };
 
@@ -34,3 +44,16 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
+
+startButton.addEventListener('click', () => {
+  const timeToCount = targetTime - Date.now();
+  console.log(convertMs(timeToCount));
+});
+
+values.forEach(val => {
+  console.log(val.textContent);
+});
+
+labels.forEach(label => {
+  console.log(label.textContent.toLowerCase());
+});
