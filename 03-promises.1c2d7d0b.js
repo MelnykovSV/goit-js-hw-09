@@ -1,0 +1,2 @@
+const e=document.querySelector(".form");e.addEventListener("submit",(o=>{o.preventDefault();const t=new FormData(o.currentTarget),n={};for(item of[...t])console.log(`${item[0]} value: ${item[1]}`),n[item[0]]=item[1];e.reset(),function({delay:e,step:o,amount:t}){const n=[];for(let r=0;r<t;r++)n.push(e+r*o);console.log(n),console.log(n.length)}(n)})),function(e,o){const t=Math.random()>.3;return new Promise(((e,o)=>{t?e("success value"):o("error")}))}().then((e=>{console.log(e)})).catch((e=>{console.log(e)}));
+//# sourceMappingURL=03-promises.1c2d7d0b.js.map

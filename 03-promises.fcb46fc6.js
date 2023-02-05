@@ -1,2 +1,0 @@
-const e=document.querySelector(".form");e.addEventListener("submit",(t=>{t.preventDefault();const o=new FormData(t.currentTarget),n={};for(item of[...o])console.log(`${item[0]} value: ${item[1]}`),n[item[0]]=item[1];e.reset(),function({delay:e,step:t,amount:o}){const n=[];for(let l=0;l<o;l++)n.push(e+l*t);console.log(n),console.log(n.length)}(n)}));
-//# sourceMappingURL=03-promises.fcb46fc6.js.map
