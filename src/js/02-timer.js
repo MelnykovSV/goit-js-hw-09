@@ -6,8 +6,8 @@ let targetTime;
 
 const datepicker = document.querySelector('#datetime-picker');
 const startButton = document.querySelector('[data-start]');
-const labels = document.querySelectorAll('.label');
-const values = document.querySelectorAll('.value');
+const fields = document.querySelectorAll('.field');
+let timerID;
 
 const options = {
   enableTime: true,
@@ -48,12 +48,10 @@ function convertMs(ms) {
 startButton.addEventListener('click', () => {
   const timeToCount = targetTime - Date.now();
   console.log(convertMs(timeToCount));
-});
-
-values.forEach(val => {
-  console.log(val.textContent);
-});
-
-labels.forEach(label => {
-  console.log(label.textContent.toLowerCase());
+  fields.forEach(field => {
+    field.querySelector('.value').textContent =
+      convertMs(timeToCount)[
+        field.querySelector('.label').textContent.toLowerCase()
+      ];
+  });
 });
