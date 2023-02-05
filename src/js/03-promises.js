@@ -12,7 +12,30 @@ form.addEventListener('submit', e => {
 
   form.reset();
 
-  buildDelaysArray(params);
+  const delays = buildDelaysArray(params);
+
+  const promisesArray = delays.map((delay, position) => {
+    const promise = new Promise((resolve, reject) => {
+      const shouldResolve = Math.random() > 0.1;
+      setTimeout(() => {
+        if (shouldResolve) {
+          resolve(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        } else {
+          reject(`❌ Rejected promise ${position} in ${delay}ms`);
+        }
+      }, delay);
+    });
+
+    return promise;
+  });
+
+  Promise.all(promisesArray)
+    .then(a => {
+      console.log(a);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 //creates array of steps from data
@@ -20,29 +43,33 @@ form.addEventListener('submit', e => {
 function buildDelaysArray({ delay, step, amount }) {
   const delays = [];
   for (let i = 0; i < amount; i++) {
-    delays.push(delay + i * step);
+    delays.push(parseInt(delay) + i * parseInt(step));
   }
-  console.log(delays);
-  console.log(delays.length);
+
+  return delays;
 }
 
-function createPromise(position, delay) {
-  const shouldResolve = Math.random() > 0.3;
-  return new Promise((resolve, reject) => {
-    if (shouldResolve) {
-      // Fulfill
-      resolve('success value');
-    } else {
-      // Reject
-      reject('error');
-    }
-  });
-}
+// function createPromise(delay, position) {
+//   // console.log(delay);
+//   // console.log(position);
+//   const promise = new Promise((resolve, reject) => {
+//     const shouldResolve = Math.random() > 0.3;
+//     setTimeout(() => {
+//       if (shouldResolve) {
+//         resolve(`✅ Fulfilled promise ${position} in ${delay}ms`);
+//       } else {
+//         reject(`❌ Rejected promise ${position} in ${delay}ms`);
+//       }
+//     }, delay);
+//   });
 
-createPromise('position', 'delay')
-  .then(a => {
-    console.log(a);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+//   return promise;
+// }
+
+// createPromise(2000, 2)
+//   .then(a => {
+//     console.log(a);
+//   })
+//   .catch(err => {
+//     console.log(err);
+//   });
