@@ -28,9 +28,21 @@ function buildDelaysArray({ delay, step, amount }) {
 
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
-  if (shouldResolve) {
-    // Fulfill
-  } else {
-    // Reject
-  }
+  return new Promise((resolve, reject) => {
+    if (shouldResolve) {
+      // Fulfill
+      resolve('success value');
+    } else {
+      // Reject
+      reject('error');
+    }
+  });
 }
+
+createPromise('position', 'delay')
+  .then(a => {
+    console.log(a);
+  })
+  .catch(err => {
+    console.log(err);
+  });
