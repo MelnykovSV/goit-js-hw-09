@@ -8,18 +8,31 @@ const datepicker = document.querySelector('#datetime-picker');
 const startButton = document.querySelector('[data-start]');
 const fields = document.querySelectorAll('.field');
 let timerID;
+startButton.disabled = true;
 
 const options = {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
+
+  //Function to pick date and to check if it is in future
   onClose(selectedDates) {
-    if (selectedDates[0].getTime() <= Date.now) {
+    //Resets old timer if datepicker was used in the middle of process of counting
+    clearInterval(timerID);
+    fields.forEach(field => {
+      field.querySelector('.value').textContent = '00';
+    });
+
+    //Picks the date if it is in future
+
+    if (selectedDates[0].getTime() < Date.now()) {
+      startButton.disabled = true;
       alert('Pick the date in the future');
+      return;
     } else {
-      console.log('+');
       targetTime = selectedDates[0].getTime();
+      startButton.disabled = false;
     }
   },
 };
@@ -45,13 +58,37 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
+//Function to count time left to some date and to write it to fields
+function countTime(time) {
+  const timeToCount = time - Date.now();
+  if (Math.floor(timeToCount / 1000)) {
+    console.log(timeToCount);
+    fields.forEach(field => {
+      field.querySelector('.value').textContent = convertMs(timeToCount)
+        [field.querySelector('.label').textContent.toLowerCase()].toString()
+        .padStart(2, '0');
+    });
+  } else {
+    console.log(`This is the time: ${timeToCount}`);
+    fields.forEach(field => {
+      field.querySelector('.value').textContent = convertMs(timeToCount)
+        [field.querySelector('.label').textContent.toLowerCase()].toString()
+        .padStart(2, '0');
+    });
+    console.log(`Final time ${Math.floor(timeToCount / 1000)}`);
+    console.log(
+      `Should be in value: ${convertMs(timeToCount)
+        [fields[3].querySelector('.label').textContent.toLowerCase()].toString()
+        .padStart(2, '0')}`
+    );
+    clearInterval(timerID);
+    setTimeout(alert('The time has come'), 1000);
+  }
+}
+
+// Start time on click
+
 startButton.addEventListener('click', () => {
-  const timeToCount = targetTime - Date.now();
-  console.log(convertMs(timeToCount));
-  fields.forEach(field => {
-    field.querySelector('.value').textContent =
-      convertMs(timeToCount)[
-        field.querySelector('.label').textContent.toLowerCase()
-      ];
-  });
+  countTime(targetTime);
+  timerID = setInterval(countTime, 1000, targetTime);
 });
