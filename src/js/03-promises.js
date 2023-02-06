@@ -16,12 +16,12 @@ form.addEventListener('submit', e => {
 
   const promisesArray = delays.map((delay, position) => {
     const promise = new Promise((resolve, reject) => {
-      const shouldResolve = Math.random() > 0.1;
+      const shouldResolve = Math.random() > 0.3;
       setTimeout(() => {
         if (shouldResolve) {
-          resolve(`✅ Fulfilled promise ${position} in ${delay}ms`);
+          resolve(`✅ Fulfilled promise ${position + 1} in ${delay}ms`);
         } else {
-          reject(`❌ Rejected promise ${position} in ${delay}ms`);
+          reject(`❌ Rejected promise ${position + 1} in ${delay}ms`);
         }
       }, delay);
     });
@@ -29,13 +29,15 @@ form.addEventListener('submit', e => {
     return promise;
   });
 
-  Promise.all(promisesArray)
-    .then(a => {
-      console.log(a);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  for (ele of promisesArray) {
+    ele
+      .then(a => {
+        console.log(a);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 });
 
 //creates array of steps from data
