@@ -29,7 +29,7 @@ const options = {
 
     if (selectedDates[0].getTime() < Date.now()) {
       startButton.disabled = true;
-      alert('Pick the date in the future');
+      Notiflix.Notify.warning('Pick the date in the future');
       return;
     } else {
       targetTime = selectedDates[0].getTime();
