@@ -28,7 +28,7 @@ const options = {
 
     //Picks the date if it is in future
 
-    if (selectedDates[0].getTime() < Date.now()) {
+    if (selectedDates[0].getTime() <= Date.now()) {
       startButton.disabled = true;
       Notiflix.Notify.warning('Pick the date in the future');
       return;
@@ -39,8 +39,6 @@ const options = {
   },
 };
 
-flatpickr(datepicker, options);
-
 //Function to count time left to some date and to write it to fields
 function countTime(time) {
   const timeToCount = time - Date.now();
@@ -49,14 +47,6 @@ function countTime(time) {
     clearInterval(timerID);
     Notiflix.Notify.warning('The time has come');
   }
-
-  // if (Math.floor(timeToCount / 1000)) {
-  //   fields.forEach(writeTime);
-  // } else {
-  //   fields.forEach(writeTime);
-  //   clearInterval(timerID);
-  //   Notiflix.Notify.warning('The time has come');
-  // }
 
   //Function write time to fields
 
@@ -67,7 +57,7 @@ function countTime(time) {
   }
 }
 
-// Start time on click
+flatpickr(datepicker, options);
 
 startButton.addEventListener('click', () => {
   countTime(targetTime);
