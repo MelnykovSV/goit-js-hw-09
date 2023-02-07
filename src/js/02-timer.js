@@ -1,7 +1,6 @@
 import flatpickr from 'flatpickr';
 import Notiflix from 'notiflix';
 import { convertMs } from './convertMs';
-// Додатковий імпорт стилів
 import 'flatpickr/dist/flatpickr.min.css';
 
 let targetTime;
@@ -20,6 +19,14 @@ const options = {
 
   //Function to pick date and to check if it is in future
   onClose(selectedDates) {
+    //date checks
+    if (selectedDates[0].getTime() === targetTime) {
+      return;
+    }
+    if (selectedDates[0].getTime() <= Date.now()) {
+      Notiflix.Notify.warning('Pick the date in the future');
+      return;
+    }
     //Resets old timer if datepicker was used in the middle of process of counting
     clearInterval(timerID);
     fields.forEach(field => {
@@ -28,11 +35,6 @@ const options = {
 
     //Picks the date if it is in future
 
-    if (selectedDates[0].getTime() <= Date.now()) {
-      startButton.disabled = true;
-      Notiflix.Notify.warning('Pick the date in the future');
-      return;
-    }
     targetTime = selectedDates[0].getTime();
     startButton.disabled = false;
   },
