@@ -64,26 +64,29 @@ function countTime(time) {
   const timeToCount = time - Date.now();
   if (Math.floor(timeToCount / 1000)) {
     console.log(timeToCount);
-    fields.forEach(field => {
-      field.querySelector('.value').textContent = convertMs(timeToCount)
-        [field.querySelector('.label').textContent.toLowerCase()].toString()
-        .padStart(2, '0');
-    });
+    fields.forEach(writeTime);
   } else {
-    console.log(`This is the time: ${timeToCount}`);
+    // console.log(`This is the time: ${timeToCount}`);
     fields.forEach(field => {
       field.querySelector('.value').textContent = convertMs(timeToCount)
         [field.querySelector('.label').textContent.toLowerCase()].toString()
         .padStart(2, '0');
     });
-    console.log(`Final time ${Math.floor(timeToCount / 1000)}`);
-    console.log(
-      `Should be in value: ${convertMs(timeToCount)
-        [fields[3].querySelector('.label').textContent.toLowerCase()].toString()
-        .padStart(2, '0')}`
-    );
+    // console.log(`Final time ${Math.floor(timeToCount / 1000)}`);
+    // console.log(
+    //   `Should be in value: ${convertMs(timeToCount)
+    //     [fields[3].querySelector('.label').textContent.toLowerCase()].toString()
+    //     .padStart(2, '0')}`
+    // );
     clearInterval(timerID);
     setTimeout(Notiflix.Notify.warning('The time has come'), 1000);
+  }
+
+  function writeTime(formField) {
+    console.log(formField);
+    formField.querySelector('.value').textContent = convertMs(timeToCount)
+      [formField.querySelector('.label').textContent.toLowerCase()].toString()
+      .padStart(2, '0');
   }
 }
 
