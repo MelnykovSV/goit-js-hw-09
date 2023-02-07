@@ -44,7 +44,6 @@ const options = {
 function countTime(time) {
   const timeToCount = time - Date.now();
   fields.forEach(writeTime);
-  console.log(timeToCount);
   if (!Math.floor(timeToCount / 1000)) {
     clearInterval(timerID);
     Notiflix.Notify.warning('The time has come');
