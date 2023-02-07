@@ -1,4 +1,5 @@
 import flatpickr from 'flatpickr';
+import Notiflix from 'notiflix';
 // Додатковий імпорт стилів
 import 'flatpickr/dist/flatpickr.min.css';
 
@@ -82,7 +83,7 @@ function countTime(time) {
         .padStart(2, '0')}`
     );
     clearInterval(timerID);
-    setTimeout(alert('The time has come'), 1000);
+    setTimeout(Notiflix.Notify.warning('The time has come'), 1000);
   }
 }
 

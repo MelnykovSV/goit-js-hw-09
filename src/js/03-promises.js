@@ -1,3 +1,5 @@
+import Notiflix from 'notiflix';
+
 const form = document.querySelector('.form');
 
 form.addEventListener('submit', e => {
@@ -32,10 +34,10 @@ form.addEventListener('submit', e => {
   for (ele of promisesArray) {
     ele
       .then(a => {
-        console.log(a);
+        Notiflix.Notify.success(a);
       })
       .catch(err => {
-        console.log(err);
+        Notiflix.Notify.failure(err);
       });
   }
 });
@@ -50,6 +52,7 @@ function buildDelaysArray({ delay, step, amount }) {
 
   return delays;
 }
+Notiflix.Notify.info('Cogito ergo sum');
 
 // function createPromise(delay, position) {
 //   // console.log(delay);
