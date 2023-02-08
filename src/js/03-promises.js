@@ -12,7 +12,7 @@ form.addEventListener('submit', e => {
 
   const promisesArray = delaysArray.map(generatePromise);
 
-  alertPromise(promisesArray);
+  alertPromises(promisesArray);
 });
 
 //geathers data from form
@@ -23,7 +23,6 @@ function geatherFormData(e) {
   const formObject = {};
 
   for (item of [...data]) {
-    console.log(`${item[0]} value: ${item[1]}`);
     formObject[item[0]] = item[1];
   }
 
@@ -67,7 +66,7 @@ function generatePromise(delay, position, array) {
 
 //Alerts promise result
 
-function alertPromise(promisesArray) {
+function alertPromises(promisesArray) {
   for (promise of promisesArray) {
     promise
       .then(a => {
