@@ -10,9 +10,11 @@ form.addEventListener('submit', e => {
 
   const delaysArray = buildDelaysArray(formObject);
 
-  const promisesArray = delaysArray.map(generatePromise);
+  if (delaysArray) {
+    const promisesArray = delaysArray.map(generatePromise);
 
-  alertPromises(promisesArray);
+    alertPromises(promisesArray);
+  }
 });
 
 //geathers data from form
@@ -34,6 +36,11 @@ function geatherFormData(e) {
 
 function buildDelaysArray({ delay, step, amount }) {
   const delays = [];
+  if ((delay < 0) | (step < 0) | (amount <= 0)) {
+    Notiflix.Notify.warning('Enter valid values');
+    button.disabled = false;
+    return;
+  }
   for (let i = 0; i < amount; i++) {
     delays.push(parseInt(delay) + i * parseInt(step));
   }
