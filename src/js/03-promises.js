@@ -53,28 +53,3 @@ function buildDelaysArray({ delay, step, amount }) {
   return delays;
 }
 Notiflix.Notify.info('Cogito ergo sum');
-
-// function createPromise(delay, position) {
-//   // console.log(delay);
-//   // console.log(position);
-//   const promise = new Promise((resolve, reject) => {
-//     const shouldResolve = Math.random() > 0.3;
-//     setTimeout(() => {
-//       if (shouldResolve) {
-//         resolve(`✅ Fulfilled promise ${position} in ${delay}ms`);
-//       } else {
-//         reject(`❌ Rejected promise ${position} in ${delay}ms`);
-//       }
-//     }, delay);
-//   });
-
-//   return promise;
-// }
-
-// createPromise(2000, 2)
-//   .then(a => {
-//     console.log(a);
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
