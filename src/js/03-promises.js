@@ -22,7 +22,7 @@ function geatherFormData(e) {
   const data = new FormData(e.currentTarget);
   const formObject = {};
 
-  for (item of [...data]) {
+  for (const item of [...data]) {
     formObject[item[0]] = item[1];
   }
 
