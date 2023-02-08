@@ -67,7 +67,7 @@ function generatePromise(delay, position, array) {
 //Alerts promise result
 
 function alertPromises(promisesArray) {
-  for (promise of promisesArray) {
+  for (const promise of promisesArray) {
     promise
       .then(a => {
         Notiflix.Notify.success(a);
