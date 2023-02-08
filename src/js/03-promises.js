@@ -5,6 +5,7 @@ const button = document.querySelector('button');
 
 form.addEventListener('submit', e => {
   button.disabled = true;
+
   const formObject = geatherFormData(e);
 
   const delaysArray = buildDelaysArray(formObject);
@@ -41,7 +42,7 @@ function buildDelaysArray({ delay, step, amount }) {
   return delays;
 }
 
-//generates single promise with given delay
+//generates a promise with given delay
 
 function generatePromise(delay, position, array) {
   const promise = new Promise((resolve, reject) => {
@@ -50,12 +51,12 @@ function generatePromise(delay, position, array) {
       if (shouldResolve) {
         resolve(`✅ Fulfilled promise ${position + 1} in ${delay}ms`);
         if (position + 1 === array.length) {
-          console.log('this is the last promise!');
+          button.disabled = false;
         }
       } else {
         reject(`❌ Rejected promise ${position + 1} in ${delay}ms`);
         if (position + 1 === array.length) {
-          console.log('this is the last promise!');
+          button.disabled = false;
         }
       }
     }, delay);
@@ -71,10 +72,11 @@ function alertPromise(promisesArray) {
     promise
       .then(a => {
         Notiflix.Notify.success(a);
+        console.log(a);
       })
       .catch(err => {
         Notiflix.Notify.failure(err);
+        console.log(err);
       });
-    button.disabled = false;
   }
 }
