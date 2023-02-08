@@ -1,24 +1,20 @@
 import Notiflix from 'notiflix';
 
 const form = document.querySelector('.form');
+const button = document.querySelector('button');
 
 form.addEventListener('submit', e => {
+  button.disabled = true;
   const formObject = geatherFormData(e);
 
   const delaysArray = buildDelaysArray(formObject);
 
   const promisesArray = delaysArray.map(generatePromise);
 
-  for (promise of promisesArray) {
-    promise
-      .then(a => {
-        Notiflix.Notify.success(a);
-      })
-      .catch(err => {
-        Notiflix.Notify.failure(err);
-      });
-  }
+  alertPromise(promisesArray);
 });
+
+//geathers data from form
 
 function geatherFormData(e) {
   e.preventDefault();
@@ -47,14 +43,20 @@ function buildDelaysArray({ delay, step, amount }) {
 
 //generates single promise with given delay
 
-function generatePromise(delay, position) {
+function generatePromise(delay, position, array) {
   const promise = new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
     setTimeout(() => {
       if (shouldResolve) {
         resolve(`✅ Fulfilled promise ${position + 1} in ${delay}ms`);
+        if (position + 1 === array.length) {
+          console.log('this is the last promise!');
+        }
       } else {
         reject(`❌ Rejected promise ${position + 1} in ${delay}ms`);
+        if (position + 1 === array.length) {
+          console.log('this is the last promise!');
+        }
       }
     }, delay);
   });
@@ -62,4 +64,17 @@ function generatePromise(delay, position) {
   return promise;
 }
 
-// Notiflix.Notify.info('Cogito ergo sum');
+//Alerts promise result
+
+function alertPromise(promisesArray) {
+  for (promise of promisesArray) {
+    promise
+      .then(a => {
+        Notiflix.Notify.success(a);
+      })
+      .catch(err => {
+        Notiflix.Notify.failure(err);
+      });
+    button.disabled = false;
+  }
+}
